@@ -1,0 +1,4 @@
+/* Scoped Tailwind — only classes used in reveal-text.tsx (rt: prefix). */
+@import "tailwindcss" prefix(rt);
+@source "./reveal-text.tsx";
+@source "../layout/OverlayWordmark.tsx";

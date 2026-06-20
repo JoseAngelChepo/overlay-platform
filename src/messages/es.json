@@ -14,7 +14,10 @@
     }
   },
   "home": {
-    "title": "Bienvenido",
-    "lede": "Área autenticada de ejemplo. Reemplaza esta vista con la UI de tu producto."
+    "tagline": "Tu contenido. Tu lente.",
+    "urlLabel": "URL de la página a probar",
+    "urlPlaceholder": "Pega una URL para probar…",
+    "urlHint": "Pulsa Enter para continuar",
+    "urlInvalid": "Introduce una URL válida (p. ej. https://ejemplo.com)"
   }
 }

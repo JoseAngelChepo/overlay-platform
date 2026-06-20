@@ -1,6 +1,6 @@
-# template-platform
+# overlay-platform
 
-Next.js frontend paired with [**template-services**](https://github.com/JoseAngelChepo/template-services). Public landing, auth, and protected dashboard.
+Next.js frontend paired with sibling backend **`overlay-services`**. Public landing, auth, and protected dashboard.
 
 **First time here?** Full local setup (clone both repos, MongoDB on macOS, env vars): [**template-local-setup**](https://github.com/JoseAngelChepo/template-local-setup) Claude Agent Skill.
 
@@ -31,7 +31,7 @@ npm install
 npm run dev
 ```
 
-Requires **template-services** running on `http://localhost:3001`. See the [local setup skill](https://github.com/JoseAngelChepo/template-local-setup) for the full walkthrough.
+Requires **`overlay-services`** running on `http://localhost:3001`. See the [local setup skill](https://github.com/JoseAngelChepo/template-local-setup) for the full walkthrough.
 
 ## Environment
 
@@ -48,7 +48,7 @@ See [`.env.example`](./.env.example). Never commit `.env` or `.env.local`.
 | Topic | File |
 |-------|------|
 | Local setup (clone, MongoDB, env) | [template-local-setup](https://github.com/JoseAngelChepo/template-local-setup) |
-| Backend (sibling repo) | [template-services](https://github.com/JoseAngelChepo/template-services) |
+| Backend (sibling repo) | **`overlay-services`** — `…/overlay/overlay-services` |
 | Components & styling | [`docs/COMPONENTS.md`](./docs/COMPONENTS.md) |
 | Landing sections | [`docs/LANDING.md`](./docs/LANDING.md) |
 | Fonts | [`docs/FONTS.md`](./docs/FONTS.md) |
@@ -71,13 +71,12 @@ Read this section first when working in this repo (Cursor, Copilot, Claude, etc.
 
 | Rule file | Purpose |
 |-----------|---------|
-| [`template-requirements.mdc`](./.cursor/rules/template-requirements.mdc) | Fork checklist, landing/i18n/favicon, component layout, agent behavior |
-| [`template-context.mdc`](./.cursor/rules/template-context.mdc) | Monorepo layout, routes, env, API client, styling |
+| [`overlay-context.mdc`](./.cursor/rules/overlay-context.mdc) | Monorepo layout, routes, env, API client, styling |
 
 ### What this template is
 
 - A **starter**, not a finished product. Do not treat placeholders as production values.
-- **Frontend only** — HTTP contracts, DTOs, validation, and status codes live in sibling repo **`template-services`**. Read that repo before inventing API shapes.
+- **Frontend only** — HTTP contracts, DTOs, validation, and status codes live in sibling repo **`overlay-services`**. Read that repo before inventing API shapes.
 - **Scope to keep:** landing, auth UI, session cookies, dashboard shell, i18n helpers. Do **not** reintroduce old product domains (arena, challenges, admin panels, etc.) unless the user explicitly asks.
 
 ### Repository layout (where to change things)
@@ -106,7 +105,7 @@ docs/                     # COMPONENTS, LANDING, FONTS
 1. **Rebrand / copy** — `src/content/landing.ts`, `src/messages/*.json`, `src/app/layout.tsx` metadata, `package.json` `name`, `--app-*` in `src/app/globals.css`.
 2. **New marketing section** — add section under `src/components/landing/sections/`, wire in `LandingPage.tsx`, strings in `landing.ts` (not hardcoded in the section).
 3. **New authenticated feature** — new folder `src/components/<feature>/` (3+ related files), new route under `src/app/`, extend `AuthGuard` public routes only if the page must be public.
-4. **New API calls** — extend `src/data/api/server/index.ts` + `ServicesProvider`; confirm endpoints in **template-services** first.
+4. **New API calls** — extend `src/data/api/server/index.ts` + `ServicesProvider`; confirm endpoints in **`overlay-services`** first.
 5. **Third-party UI** (animations, 21st.dev, etc.) — isolated wrapper in `ui/` or `<feature>/`; never paste large snippets into `layout.tsx`, `providers.tsx`, or `globals.css`.
 
 ### Hard rules
@@ -122,10 +121,10 @@ docs/                     # COMPONENTS, LANDING, FONTS
 | Area | What to change |
 |------|----------------|
 | Brand & SEO | `src/app/layout.tsx`, `package.json` `name` |
-| Favicon | `src/app/favicon.ico` (and optional `icon.png` / `apple-icon.png`) — see `template-requirements.mdc` |
+| Favicon | `src/app/favicon.ico` (and optional `icon.png` / `apple-icon.png`) |
 | Copy & i18n | `landing.ts`, `src/messages/*.json` (keep `en` / `es` keys in sync) |
 | Theme & fonts | `globals.css` (`--app-*`), `src/config/fonts.ts` |
-| Env & API | `NEXT_PUBLIC_*` in deployment + **template-services** |
+| Env & API | `NEXT_PUBLIC_*` in deployment + **`overlay-services`** |
 | Footer / legal | Replace placeholder `#` links in landing footer |
 
 ### Public routes (AuthGuard)
@@ -134,6 +133,5 @@ These paths are allowed without a session: `/`, `/sign-up`, `/sign-in`, `/auth/g
 
 ### When unsure
 
-1. Check **template-services** for API behavior.
-2. Read **`template-requirements.mdc`** for fork and styling rules.
-3. Read **`docs/COMPONENTS.md`** before adding or moving components.
+1. Check **`overlay-services`** for API behavior.
+2. Read **`docs/COMPONENTS.md`** before adding or moving components.

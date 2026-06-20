@@ -14,7 +14,10 @@
     }
   },
   "home": {
-    "title": "Welcome",
-    "lede": "Authenticated area placeholder. Replace this shell with your product UI."
+    "tagline": "Your content. Your lens.",
+    "urlLabel": "Page URL to test",
+    "urlPlaceholder": "Paste a URL to test…",
+    "urlHint": "Press Enter to continue",
+    "urlInvalid": "Enter a valid URL (e.g. https://example.com)"
   }
 }

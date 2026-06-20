@@ -1,0 +1,75 @@
+---
+description: Overlay platform context
+alwaysApply: true
+---
+
+# overlay-platform — project context
+
+Next.js web app for **Overlay**. Pairs with sibling backend **`overlay-services`** (NestJS + MongoDB).
+
+## Sibling repos
+
+| Repo | Role | Local path (typical) |
+|------|------|----------------------|
+| **`overlay-platform`** (this repo) | React UI, auth, API client, overlay renderers | `…/overlay/overlay-platform` |
+| **`overlay-services`** | Backend API — DTOs, validation, guards, MongoDB | `…/overlay/overlay-services` |
+
+**HTTP contracts live in `overlay-services`.** Read that repo before inventing request/response shapes. API base: `NEXT_PUBLIC_API_URL` → typically `http://localhost:3001/api/v1` in dev. Canonical backend context: **`overlay-services/.cursor/rules/overlay-context.mdc`**.
+
+## Product
+
+Overlay desacopla el contenido de la web de la forma que el publisher eligió. Toma cualquier página, extrae su contenido como data portable (Firecrawl vía backend), y lo vuelve a pintar según quién lo está leyendo.
+
+Cada **template** del backend tiene un `templateKey` (`vc`, `tramite`, `shopper`, …) y un `extractionSchema`. En el frontend, cada `templateKey` mapea a un componente React que pinta exactamente la forma de ese JSON. Reglas del template:
+
+- **structure** — qué campos mostrar, orden, énfasis, ocultar
+- **style** — tipografía, tema, colores, layout
+
+## Stack
+
+- Next.js (App Router) + TypeScript
+- API client: `ServicesProvider` + `src/data/api/server/`
+- Auth: cookie/session via JWT from **`overlay-services`**
+- i18n: `src/messages/en.json`, `es.json`; locale via `src/proxy.ts`
+
+## Backend data model (read-only reference)
+
+```
+User → Template (owner nullable = built-in)
+Source → Snapshot (cache scrape)
+Template + Snapshot → Overlay (extractedData + render)
+```
+
+Cache: snapshot por URL, overlay por par `(template, snapshot)`. Ver schemas en `overlay-services/src/{templates,sources,snapshots,overlays}/`.
+
+## Overlay domain (frontend)
+
+- **`templateKey` → componente** — cada intención de lectura tiene su renderer (p. ej. `VcView`, `TramiteView`, `ShopperView`)
+- Consume `GET/POST /overlays`, `GET /templates` del backend
+- Aplica `structure` y `style` del template al render (reordenar, resaltar, tema)
+
+*(Renderers y rutas de overlay se añaden conforme crezca el producto.)*
+
+## Environment
+
+- `src/config/env.ts`: `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_API_URL`
+- Requires **`overlay-services`** on port 3001 for auth and API calls
+
+## App shell
+
+- **`/`**: public landing — `src/components/landing/` + `src/content/landing.ts`
+- **`/dashboard`**: authenticated home — `AuthGuard` + `HomeShell`
+- **Public routes**: `/`, `/sign-in`, `/sign-up`, `/auth/google/callback` — see `AuthGuard` and `src/proxy.ts`
+- **Locale proxy**: `src/proxy.ts` strips `/en` and `/es` prefixes; sets `NEXT_LOCALE` cookie
+- **Client state**: `ServicesProvider`; API in `src/data/api/server/`; auth user via `normalizeAuthMeUser`
+
+## Styling
+
+- Light theme tokens in `src/app/globals.css` (`--app-*`)
+- Component layout: `docs/COMPONENTS.md`
+
+## Agent guidelines
+
+- Minimize scope; match `ServicesProvider`, `AuthGuard`, `@/components/...` patterns
+- New overlay UI → isolated components under `src/components/<feature>/`
+- API changes → coordinate with **`overlay-services`** (`docs/README.md` there)

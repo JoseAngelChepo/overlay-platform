@@ -25,7 +25,7 @@
   --app-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   /* Typography — see src/config/fonts.ts, docs/FONTS.md
      Use a literal family name when forking (not var(--font-*) — that variable lives on <body>). */
-  --app-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --app-font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 html {
@@ -225,63 +225,6 @@ a:hover {
 .auth-footer:hover {
   color: var(--app-primary);
   text-decoration: underline;
-}
-
-/* —— Home (authenticated shell) —— */
-.home-shell {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
-
-.home-card {
-  padding: 1.75rem;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius-lg);
-  box-shadow: var(--app-shadow-sm);
-}
-
-.home-title {
-  margin: 0 0 0.35rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--app-text);
-}
-
-.home-lede {
-  margin: 0 0 1.5rem;
-  font-size: 0.9375rem;
-  color: var(--app-text-muted);
-}
-
-.home-meta {
-  margin: 0 0 1.5rem;
-  display: grid;
-  gap: 1rem;
-}
-
-.home-meta div {
-  padding: 0.75rem 1rem;
-  background: var(--app-surface-muted);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-}
-
-.home-meta dt {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--app-text-faint);
-}
-
-.home-meta dd {
-  margin: 0.25rem 0 0;
-  font-size: 0.9375rem;
-  color: var(--app-text);
 }
 
 .page-status {
